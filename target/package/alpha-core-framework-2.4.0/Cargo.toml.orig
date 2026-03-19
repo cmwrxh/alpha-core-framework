@@ -1,0 +1,16 @@
+[package]
+name = "alpha-core-framework"
+version = "2.4.0"
+edition = "2021"
+authors = ["Charles Mwaura <mwauracharles95@gmail.com.com>"]
+description = "High-performance modular Rust framework for async task orchestration and data pipelines."
+license = "MIT"
+repository = "https://github.com/cmwrxh/alpha-core-framework"
+homepage = "https://brilliantunicorn.com"
+documentation = "https://docs.rs/alpha-core-framework"
+readme = "README.md"
+keywords = ["async", "orchestration", "performance", "framework", "kenya"]
+categories = ["asynchronous", "concurrency", "development-tools"]
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }

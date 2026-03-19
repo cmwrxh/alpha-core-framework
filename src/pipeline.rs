@@ -1,31 +1,28 @@
+use crate::middleware::{Middleware, MetricsLogger, execute_with_telemetry};
 use std::sync::Arc;
-use tokio::sync::RwLock;
 
-/// Core Orchestrator for AlphaCore Framework
+/// The main engine that manages and runs tasks.
 pub struct Orchestrator {
     pub name: String,
-    pub tasks: Arc<RwLock<Vec<String>>>,
+    // We use Arc (Atomic Reference Counter) so multiple threads can share the logger
+    pub middleware: Arc<dyn Middleware>,
 }
 
 impl Orchestrator {
+    /// Create a new engine with a default logger.
     pub fn new(name: &str) -> Self {
         Self {
             name: name.to_string(),
-            tasks: Arc::new(RwLock::new(Vec::new())),
+            middleware: Arc::new(MetricsLogger),
         }
     }
 
-    pub async fn add_task(&self, task_name: &str) {
-        let mut tasks = self.tasks.write().await;
-        tasks.push(task_name.to_string());
-        println!("Task '{}' added to pipeline '{}'", task_name, self.name);
-    }
-
-    pub async fn run(&self) {
-        let tasks = self.tasks.read().await;
-        println!("Starting execution of {} tasks...", tasks.len());
-        for task in tasks.iter() {
-            println!("Running: {}", task);
-        }
+    /// Run a task with full telemetry and timing.
+    pub async fn run_task<F, Fut>(&self, task_name: &str, task_logic: F)
+    where
+        F: FnOnce() -> Fut,
+        Fut: std::future::Future<Output = ()>,
+    {
+        execute_with_telemetry(task_name, &*self.middleware, task_logic).await;
     }
 }
