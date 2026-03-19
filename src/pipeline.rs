@@ -1,26 +1,31 @@
-//! Pipeline module – core of AlphaCore orchestration
-//!
-//! This module will handle task graphs, execution, middleware chaining,
-//! fault tolerance, and high-throughput data flow.
+use std::sync::Arc;
+use tokio::sync::RwLock;
 
-use std::future::Future;
-use std::pin::Pin;
-
-/// Placeholder for a basic async task definition
-pub type AsyncTask = Pin<Box<dyn Future<Output = Result<(), Box<dyn std::error::Error + Send + Sync>>> + Send>>;
-
-/// Example: a simple task that does nothing (for testing)
-pub async fn noop_task() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    println!("Executing placeholder noop task");
-    Ok(())
+/// Core Orchestrator for AlphaCore Framework
+pub struct Orchestrator {
+    pub name: String,
+    pub tasks: Arc<RwLock<Vec<String>>>,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+impl Orchestrator {
+    pub fn new(name: &str) -> Self {
+        Self {
+            name: name.to_string(),
+            tasks: Arc::new(RwLock::new(Vec::new())),
+        }
+    }
 
-    #[tokio::test]
-    async fn test_noop_task() {
-        assert!(noop_task().await.is_ok());
+    pub async fn add_task(&self, task_name: &str) {
+        let mut tasks = self.tasks.write().await;
+        tasks.push(task_name.to_string());
+        println!("Task '{}' added to pipeline '{}'", task_name, self.name);
+    }
+
+    pub async fn run(&self) {
+        let tasks = self.tasks.read().await;
+        println!("Starting execution of {} tasks...", tasks.len());
+        for task in tasks.iter() {
+            println!("Running: {}", task);
+        }
     }
 }
