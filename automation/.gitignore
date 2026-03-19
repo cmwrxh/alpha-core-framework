@@ -1,0 +1,12 @@
+# Ignore the heavy compiled binaries
+/target/
+
+# Ignore IDE specific files
+.vscode/
+
+# Ignore OS junk
+Thumbs.db
+.DS_Store
+
+# Ignore backup files
+**/*.rs.bk
