@@ -6,16 +6,9 @@ description = "High-performance modular Rust framework for async task orchestrat
 license = "MIT"
 repository = "https://github.com/cmwrxh/alpha-core-framework"
 homepage = "https://brilliantunicorn.com"
-keywords = ["rust", "async", "distributed-systems", "high-performance"]
-categories = ["asynchronous", "concurrency", "data-structures"]
 
 [dependencies]
-# Add real deps later, e.g.:
-# tokio = { version = "1", features = ["full"] }
+tokio = { version = "1", features = ["full"] }  # or minimal features if preferred
 
 [dev-dependencies]
 criterion = { version = "0.5", features = ["html_reports"] }
-
-[dependencies]
-tokio = { version = "1", features = ["full"] }  # "full" = most common runtime + macros + io + time + etc.
-tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros"] }
