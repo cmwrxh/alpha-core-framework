@@ -1,0 +1,21 @@
+[package]
+name = "alpha-core-framework"
+version = "0.1.0"
+edition = "2021"
+description = "High-performance modular Rust framework for async task orchestration and memory-efficient data pipelines"
+license = "MIT"
+repository = "https://github.com/cmwrxh/alpha-core-framework"
+homepage = "https://brilliantunicorn.com"
+keywords = ["rust", "async", "distributed-systems", "high-performance"]
+categories = ["asynchronous", "concurrency", "data-structures"]
+
+[dependencies]
+# Add real deps later, e.g.:
+# tokio = { version = "1", features = ["full"] }
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }  # "full" = most common runtime + macros + io + time + etc.
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros"] }
