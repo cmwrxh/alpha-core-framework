@@ -1,1 +1,3 @@
-target/* linguist-vendored
+target/* linguist-documentation
+automation/* linguist-documentation
+*.rs linguist-detectable=true
