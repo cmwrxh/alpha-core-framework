@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2026 Charles Mwaura. All rights reserved.
+ * Licensed under the PolyForm Shield License.
+ */
 use alpha_core_framework::pipeline::Orchestrator;
 use std::time::Duration;
 use tokio::time::sleep;
